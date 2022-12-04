@@ -1,11 +1,12 @@
 import express from 'express';
 import mongoose from 'mongoose';
+// import dotenv from 'dotenv';
 import cors from 'cors';
 import multer from 'multer';
 import { loginValidation, postCreateValidation, registerValidation } from './validations.js';
 import { UserController, PostController } from './controllers/index.js';
 import { handleValidationErrors, checkAuth } from './utils/index.js';
-
+// dotenv.config();
 mongoose
   .connect(process.env.MONGODB_KEY)
   .then((result) => console.log('Connect to Database is success!'))
@@ -44,6 +45,7 @@ app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
 });
 
 app.get('/posts', PostController.getAll);
+app.get('/posts/order=views', PostController.getPopularPosts);
 app.get('/tags', PostController.getLastTags);
 app.get('/posts/:id', PostController.getOne);
 app.post('/posts', checkAuth, postCreateValidation, handleValidationErrors, PostController.create);

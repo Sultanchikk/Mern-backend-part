@@ -11,6 +11,17 @@ export const getAll = async (req, res) => {
     });
   }
 };
+export const getPopularPosts = async (req, res) => {
+  try {
+    const posts = await PostModel.find().sort({ viewsCount: -1 }).populate('user').exec();
+
+    res.json(posts);
+  } catch (error) {
+    res.status(500).json({
+      message: 'Не удалось найти статьи',
+    });
+  }
+};
 export const getLastTags = async (req, res) => {
   try {
     const posts = await PostModel.find().limit(5).exec();
