@@ -24,12 +24,12 @@ export const getPopularPosts = async (req, res) => {
 };
 export const getLastTags = async (req, res) => {
   try {
-    const posts = await PostModel.find().limit(5).exec();
+    const posts = await PostModel.find().limit(8).exec();
 
     const tags = posts
       .map((obj) => obj.tags)
       .flat()
-      .slice(0, 5);
+      .slice(0, 8);
 
     res.json(tags);
   } catch (error) {
@@ -121,6 +121,7 @@ export const update = async (req, res) => {
         text: req.body.text,
         imageUrl: req.body.imageUrl,
         tags: req.body.tags.split(','),
+        // comments: req.body.comments,
         user: req.userId,
       },
     );
@@ -142,6 +143,27 @@ export const create = async (req, res) => {
       text: req.body.text,
       imageUrl: req.body.imageUrl,
       tags: req.body.tags.split(','),
+      user: req.userId,
+    });
+
+    const post = await doc.save();
+
+    res.json(post);
+  } catch (error) {
+    res.status(500).json({
+      message: 'Не удалось создать статью',
+    });
+  }
+};
+
+export const createComment = async (req, res) => {
+  try {
+    const doc = new PostModel({
+      title: req.body.title,
+      text: req.body.text,
+      imageUrl: req.body.imageUrl,
+      tags: req.body.tags.split(','),
+      comments: req.body.comments,
       user: req.userId,
     });
 

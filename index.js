@@ -49,6 +49,13 @@ app.get('/posts/order=2', PostController.getPopularPosts);
 app.get('/tags', PostController.getLastTags);
 app.get('/posts/:id', PostController.getOne);
 app.post('/posts', checkAuth, postCreateValidation, handleValidationErrors, PostController.create);
+app.post(
+  '/comments',
+  checkAuth,
+  postCreateValidation,
+  handleValidationErrors,
+  PostController.createComment,
+);
 app.delete('/posts/:id', checkAuth, PostController.remove);
 app.patch(
   '/posts/:id',
