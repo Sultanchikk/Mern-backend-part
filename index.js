@@ -8,7 +8,7 @@ import { UserController, PostController } from './controllers/index.js';
 import { handleValidationErrors, checkAuth } from './utils/index.js';
 // dotenv.config();
 mongoose
-  .connect('mongodb+srv://sultan:sultan@mern.lwk44zw.mongodb.net/?retryWrites=true&w=majority')
+  .connect('mongodb+srv://sultan:sultan@mern.lwk44zw.mongodb.net/test')
   .then((result) => console.log('Connect to Database is success!'))
   .catch((error) => console.log(error.message));
 
